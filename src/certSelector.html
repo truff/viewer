@@ -1,0 +1,52 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Select a certificate</title>
+    <style>
+        /*TODO: move to external style sheet. */
+        .active {
+            background: #0094ff;
+        }
+        .unselected {
+            background: #00ffff;
+        }
+        .certlist {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-color: #5bd0c0;
+            border-style:solid
+        }
+        .certlistitem:hover {
+            cursor: pointer;
+        }
+        .certlistitem {
+            border-width:1px 0px;
+            border-style: solid;
+            border-color: #5bd0c0;
+            padding: 5px;
+        }
+        .noselect {
+            user-select: none;
+        }
+        .btn {
+            margin: 1em 0em;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greet">Select certificate</h1>
+    <ul id="certList" class="certlist"></ul>
+    <button id="submit" class="btn">Submit</button>
+
+    <template id="certEntry">
+        <li class="certlistitem unselected noselect">
+            <div class="subject "></div>
+            <div class="issuer "></div>
+        </li>
+    </template>
+
+    <script src="certSelector.js"></script>
+</body>
+</html>
