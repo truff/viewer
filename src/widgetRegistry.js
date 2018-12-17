@@ -185,6 +185,7 @@ const registry = [
         //Metadata Info
         "universalName": "nn.MetadataUrl",
         "displayName": "Metadata Info",
+        //TODO: retest with the basic index.html.  May work now.
         //"widgetUrl": defaultHostUrl + metaInfoRootContext + "/index.html",
         "widgetUrl": defaultHostUrl + metaInfoRootContext + "/ViewerHomeStatic.html",
         "imageUrlSmall": defaultHostUrl + metaInfoRootContext + "/images/details.jpg",
@@ -231,9 +232,7 @@ const registry = [
         "width": 160,
         "height": 260,
         "visible": true,
-        //currently this widget is not a singleton but it should be.
-        //"singleton": false,
-        "singleton": true,
+        "singleton": false,
         "background": false,
         "guid": "bb75a439-a748-4da1-84ae-98c3454b4f78"
     }, {

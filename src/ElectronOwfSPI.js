@@ -10,7 +10,6 @@ process.once('loaded', () => {
     global.Ozone = Ozone;
 });
 
-
 //for loading as local file
 //const registry = require('./widgetRegistry.js');
 //const appPath = remote.app.getAppPath();
@@ -25,13 +24,14 @@ const LAUNCH_WIDGET_CM = "Nn.LaunchChannel";
 const OWF_CHANNEL_PUBLISH = "OWF_CHANNEL_PUBLISH";
 const OWF_CHANNEL_SUBSCRIBE = "OWF_CHANNEL_SUBSCRIBE";
 const OWF_CHANNEL_UNSUBSCRIBE = "OWF_CHANNEL_UNSUBSCRIBE";
+const OWF_CHANNEL_GET_OPEN_WIDGETS = "OWF_CHANNEL_GET_OPEN_WIDGETS";
+const OWF_CHANNEL_GET_OPEN_WIDGETS_RESP = "OWF_CHANNEL_GET_OPEN_WIDGETS_RESP";
+
 var generateGuid = function b(a) {
     return a ? (a ^ Math.random() * 16 >> a / 4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b)
 };
 
-//For some reason the default limit of 10 is being exceeded for 
-// Nn.WidgetLaunched even though we only register one time handlers 
-// for that message.  For now up to 25 and watch for this error to return:
+//The default limit of 10 was being exceeded which caused this error:
 // (node:10260) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 Nn.WidgetLaunched listeners added. Use emitter.setMaxListeners() to increase limit
 ipcRenderer.setMaxListeners(25);
 
@@ -114,6 +114,7 @@ OWF.ready = function(handler, scope) {
     //synchronously request our widgetInstanceId and launchData from main process
     //let GET_LAUNCH_DATA_RESPONSE = "getLaunchDataResponse";
     let GET_LAUNCH_DATA = "getLaunchData";
+
     //TPR: doesn't get called for sync messaging
     //ipcRenderer.once(GET_LAUNCH_DATA_RESPONSE, (event, widgetRegEntry) => {
     //    console.info("setting launch data in launched widget");
@@ -146,36 +147,27 @@ OWF.ready = function(handler, scope) {
  *  }
  */
 OWF.getOpenedWidgets = function(callback) {
-    //TODO: Mdt calls this method in paletteWindow.js.
-    //Could use a remote interface to call BrowserWindow.getAllWindows(), but
-    // then you only have access to the browser window, not the other info in
-    // the openedWindows registry that is stored in the main process hashmap.
-    //Query the main process for a list of open widgets. for testing
-    // use this:
-    if(typeof callback == "function") {
-        let openWidgets = [
-            {
-                id: 'instance guid of widget',
-                frameId: 'iframe id of widget',
-                widgetGuid: 'widget guid of the widget',
-                url: 'url of the widget',
-                name: 'name of the widget',
-                universalName: 'universal name of the widget'
-            }
-        ];
-        callback(openWidgets);
-    }
+    //setup one-time listener to response
+    ipcRenderer.once(OWF_CHANNEL_GET_OPEN_WIDGETS_RESP, (sender, openWidgets) => {
+        //console.info("The following widgets are open: " + openWidgets);
+        if(typeof callback == "function") {
+            callback(openWidgets);
+        }
+    });
+    ipcRenderer.send(OWF_CHANNEL_GET_OPEN_WIDGETS);
 };
+
+//TODO: needs testing.  probably best to pass a single desktop pane with no widgets, as below.
 OWF.getPanes = function(callback) {
     if(typeof callback == "function") {
-        callback({
-            id: 'desktop',
+        callback([{
+            id: 'desktop pane guid',
             type: 'desktoppane',
             x: 0, y: 0,
             height: 1024,
             width: 1280,
             widgets: []
-        });
+        }]);
     }
 };
 /**
@@ -228,7 +220,7 @@ OWF.Launcher.launch = function(config, callback) {
     // registry entry, esp its universal name.
     config = config || {};
     ipcRenderer.once(WIDGET_LAUNCHED_CM, (event, widgetRegEntry) => {
-        console.info("successfully launched widget");
+        //console.info("successfully launched widget");
         if(callback) {
             callback();
         }
@@ -314,6 +306,13 @@ OWF.Util.isRunningInOWF = function() {
 OWF.Util.isInContainer = function() {
     return true;
 };
+//This method isn't part of the advertized OWF API, but it is a public method
+// in the current OWF code, so keep it for now.  The only known app that uses
+// it is MDT, so keep this method until that app is fixed to use JSON.parse().
+//@deprecated
+OWF.Util.parseJson = function(str) {
+    return JSON.parse(str);
+}
 
 /**
  * functions in Ozone namespace
@@ -344,7 +343,7 @@ Ozone.state.WidgetState = function() {
     };
 };
 var widgetStateInstance = null;
-//used by PST
+//used by PST and called but not used by MDT
 Ozone.state.WidgetState.getInstance = function(cfg) {
     if(!widgetStateInstance) {
         widgetStateInstance = new Ozone.state.WidgetState();

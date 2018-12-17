@@ -13,6 +13,8 @@ const LAUNCH_WIDGET_CM = 'Nn.LaunchChannel';
 const OWF_CHANNEL_PUBLISH = "OWF_CHANNEL_PUBLISH";
 const OWF_CHANNEL_SUBSCRIBE = "OWF_CHANNEL_SUBSCRIBE";
 const OWF_CHANNEL_UNSUBSCRIBE = "OWF_CHANNEL_UNSUBSCRIBE";
+const OWF_CHANNEL_GET_OPEN_WIDGETS = "OWF_CHANNEL_GET_OPEN_WIDGETS";
+const OWF_CHANNEL_GET_OPEN_WIDGETS_RESP = "OWF_CHANNEL_GET_OPEN_WIDGETS_RESP";
 
 //map of all currently open widgets indexed by window reference
 const openWidgetRegistry = new Map();
@@ -127,7 +129,7 @@ function launchWidget(event, config) {
 
 //only do this once
 function initOwfLauncher() {
-    ipcMain.on(LAUNCH_WIDGET_CM, launchWidget );
+    ipcMain.on(LAUNCH_WIDGET_CM, launchWidget);
 
     let GET_LAUNCH_DATA = "getLaunchData";
     //meant to be called synchronously
@@ -142,6 +144,7 @@ function initOwfMessageBus() {
     ipcMain.on(OWF_CHANNEL_UNSUBSCRIBE, unsubscribeHandler);
     ipcMain.on(OWF_CHANNEL_SUBSCRIBE, subscribeHandler);
     ipcMain.on(OWF_CHANNEL_PUBLISH, publishHandler);
+    ipcMain.on(OWF_CHANNEL_GET_OPEN_WIDGETS, getOpenWidgets);
 }
 function initOwf() {
     initOwfLauncher();
@@ -204,6 +207,34 @@ function unsubscribeHandler(event, channelName) {
         subscriptionsForChannel.delete(event.sender.id);
     }
 }
+
+function getOpenWidgets(event) {
+    //Could use a remote interface to call BrowserWindow.getAllWindows(), but
+    // then you only have access to the browser window, not the other info in
+    // the openedWindows registry that is stored in the main process hashmap.
+    console.info("in OwfService.getOpenWidgets");
+    //.entries() returns array with [0] = key and [1] = value of the map.
+    let openWidgets = Array.from(openWidgetRegistry.entries());
+
+    //for each openWidget add an entry to the openWidgets array.
+    let openWidgetsResponseArray = [];
+    openWidgets.forEach(function(widget) {
+        openWidgetsResponseArray.push(
+            {
+                id: widget[1].id,
+                //widgets don't occupy iframes in electron
+                frameId: null,
+                widgetGuid: widget[1].widgetRegEntry.guid,
+                url: widget[1].widgetRegEntry.widgetUrl,
+                name: widget[1].widgetRegEntry.displayName,
+                universalName: widget[1].widgetRegEntry.universalName
+            }
+        );
+    });
+    console.info("sending openWidgets response to render window with following open widgets");
+    console.info(openWidgetsResponseArray);
+    event.sender.send(OWF_CHANNEL_GET_OPEN_WIDGETS_RESP, openWidgetsResponseArray);
+};
 
 module.exports = {
     LAUNCH_WIDGET_CM: LAUNCH_WIDGET_CM,
