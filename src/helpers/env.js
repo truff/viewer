@@ -6,15 +6,12 @@ function isDev() {
     let isDev = false;
     process.argv.forEach(function (val, index, array) {
         if(val == "dev") {
-            console.log("setting dev mode");
+            //console.log("setting dev mode");
             isDev = true;
         }
     });
     return isDev;
 }
-// function isDev() {
-//     return process.mainModule.filename.indexOf('app.asar') === -1;
-// }
 
 if(isDev()) {
     file = '../../config/env_development.json';
