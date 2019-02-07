@@ -19,7 +19,7 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
-    "electron": "3.0.9",
+    "electron": "4.0.4",
     "electron-packager": "^12.2.0"
   }
 }
