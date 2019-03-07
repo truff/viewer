@@ -33,13 +33,13 @@ require('./certificateAuthentication.js');
 
 // menu templates must end in exactly 'Template'
 const nitesMenuTemplate = require('./menu/nites');
-const editMenuTemplate = require('./menu/edit');
+//const editMenuTemplate = require('./menu/edit');
 const viewMenuTemplate = require('./menu/view');
 const helpMenuTemplate = require('./menu/help');
 const devMenuTemplate = require('./menu/development');
 
 const setApplicationMenu = () => {
-    const menus = [nitesMenuTemplate, editMenuTemplate, viewMenuTemplate];
+    const menus = [nitesMenuTemplate, viewMenuTemplate];
     if (env.name !== 'production') {
         menus.push(devMenuTemplate);
     }

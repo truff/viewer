@@ -1,22 +1,14 @@
-//const electron = require('electron');
-const { ipcRenderer } = require('electron');
-//const { BrowserWindow } = require('electron').remote;
+const { ipcRenderer, BrowserWindow, webContents, remote } = require('electron');
 //debugger
+
 
 let OWF = {};
 let Ozone = {};
 process.once('loaded', () => {
     global.OWF = OWF;
     global.Ozone = Ozone;
+    global.instanceId = remote.getCurrentWindow().instanceId;
 });
-
-//for loading as local file
-//const registry = require('./widgetRegistry.js');
-//const appPath = remote.app.getAppPath();
-//const registryScript = require.resolve(appPath + '/src/widgetRegistry.js');
-//console.log('registry path: ' + registryScript);
-//const registry = require(registryScript);
-//const createWindow = require(appPath + '/src/helpers/window.js');
 
 //Launch widget channel message
 const WIDGET_LAUNCHED_CM = "Nn.WidgetLaunched";
@@ -26,19 +18,18 @@ const OWF_CHANNEL_SUBSCRIBE = "OWF_CHANNEL_SUBSCRIBE";
 const OWF_CHANNEL_UNSUBSCRIBE = "OWF_CHANNEL_UNSUBSCRIBE";
 const OWF_CHANNEL_GET_OPEN_WIDGETS = "OWF_CHANNEL_GET_OPEN_WIDGETS";
 const OWF_CHANNEL_GET_OPEN_WIDGETS_RESP = "OWF_CHANNEL_GET_OPEN_WIDGETS_RESP";
+const OWF_ACTIVATE_WIDGET = "OWF_ACTIVATE_WIDGET";
+const OWF_ACTIVATE_WIDGET_RESP = "OWF_ACTIVATE_WIDGET_RESP";
 
 var generateGuid = function b(a) {
     return a ? (a ^ Math.random() * 16 >> a / 4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b)
 };
 
-//The default limit of 10 was being exceeded which caused this error:
-// (node:10260) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 Nn.WidgetLaunched listeners added. Use emitter.setMaxListeners() to increase limit
 ipcRenderer.setMaxListeners(25);
 
 /**
  * @see OWF APIs
  */
-let instanceId = generateGuid();
 let widgetLaunchData = null;
 
 //Add all OWF namespaces
@@ -75,13 +66,15 @@ OWF.runningInElectron = true;
 OWF.test = function() {
     console.info("ElectronOwfSPI loaded");
 };
-OWF.getIframeId = function() {
-    return { "id": instanceId };
-};
 OWF.getInstanceId = function() {
     //Used by eventing, e.g., communicated to receiving widget when publishing a channel
     // message or when a channel message is sent to one widget only.
-    return instanceId;
+    //return instanceId;
+    //let instanceId = window.instanceId;
+    return window.instanceId;
+};
+OWF.getIframeId = function() {
+    return { "id": OWF.getInstanceId() };
 };
 /**
  * @returns {string} guid for the widget definition, shared across all instances of the
@@ -111,7 +104,7 @@ OWF.notifyWidgetReady = function() {
     //Move along. Nothing to see here.
 };
 OWF.ready = function(handler, scope) {
-    //synchronously request our widgetInstanceId and launchData from main process
+    //synchronously request our launchData from main process
     //let GET_LAUNCH_DATA_RESPONSE = "getLaunchDataResponse";
     let GET_LAUNCH_DATA = "getLaunchData";
 
@@ -177,7 +170,7 @@ let subscriptions = new Set();
 OWF.Eventing.publish = function(channelName, message, dest) {
     //TODO: need to make sure ipcMain uses dest as per OWF spec.  electron doesn't have 
     // this concept built-in to its messaging bus.
-    let srcWidget = { id: instanceId };
+    let srcWidget = { id: OWF.getInstanceId() };
     ipcRenderer.send(OWF_CHANNEL_PUBLISH, channelName, message, dest, srcWidget);
 };
 
@@ -240,34 +233,34 @@ OWF.Preferences.doesUserPreferenceExist = function(cfg) {
 };
 
 /**
-     * @description retrieves the current user logged into the system
-     * @param {Object} cfg config object see below for properties
-     * @param {Function} cfg.onSuccess The callback function that is called for a successful retrieval of the user logged in.
-     * This method is passed an object having the following properties:<br>
-     * <br>
-     *     {String} currentUserName: user name<br>
-     *     {String} currentUser: user real name<br>
-     *     {Date} currentUserPrevLogin: previous login date<br>
-     *     {Number} currentId: database pk index<br>
-     * <br>
-     * @param {Function} cfg.[onFailure] The callback function that is called when the system is unable to retrieve the current user logged in. Callback parameter is an error string.
-     * @example
-     *
-     * var onSuccess = function(obj) {
-     *     if (obj) {
-     *         alert(obj.currentUser);
-     *     }
-     * };
-     *
-     * var onFailure = function(error) {
-     *     alert(error);
-     * };
-     *
-     * Ozone.pref.PrefServer.getCurrentUser({
-     *     onSuccess:onSuccess,
-     *     onFailure:onFailure
-     * });
-     */
+ * @description retrieves the current user logged into the system
+ * @param {Object} cfg config object see below for properties
+ * @param {Function} cfg.onSuccess The callback function that is called for a successful retrieval of the user logged in.
+ * This method is passed an object having the following properties:<br>
+ * <br>
+ *     {String} currentUserName: user name<br>
+ *     {String} currentUser: user real name<br>
+ *     {Date} currentUserPrevLogin: previous login date<br>
+ *     {Number} currentId: database pk index<br>
+ * <br>
+ * @param {Function} cfg.[onFailure] The callback function that is called when the system is unable to retrieve the current user logged in. Callback parameter is an error string.
+ * @example
+ *
+ * var onSuccess = function(obj) {
+ *     if (obj) {
+ *         alert(obj.currentUser);
+ *     }
+ * };
+ *
+ * var onFailure = function(error) {
+ *     alert(error);
+ * };
+ *
+ * Ozone.pref.PrefServer.getCurrentUser({
+ *     onSuccess:onSuccess,
+ *     onFailure:onFailure
+ * });
+ */
 OWF.Preferences.getCurrentUser = function(cfg) {
     //cfg.onSuccess({ currentUserName: 'Thomas.Ruff' });
     //let user = ipcRenderer.sendSync('getCurrentUser');
@@ -293,7 +286,7 @@ OWF.Preferences.setUserPreference = function(cfg) {
     //TODO: impl
 };
 
-/**
+/*
  * OWF.Utils Methods
  */
 OWF.Util.guid = function() {
@@ -322,7 +315,26 @@ Ozone.state.WidgetState = function() {
     return {
         version: '1',
         //TODO(TPR): bring window to front
-        activateWidget: noop,
+        /*
+         * cfg is object with structure {guid: <guid>, callback: <callback>}
+         * guid - guid of widget to activate
+         * callback - called after widget is launched with parameter boolean result (true if widget
+         *   was successfully activated).
+         */
+        activateWidget: function(cfg) {
+            //default widget to activate is the current widget
+            if(cfg == null || cfg.id == null) {
+                cfg = { guid: OWF.getInstanceId()};
+            }
+            console.info("attempting to activate widget " + cfg.guid);
+            //register response handler
+            ipcRenderer.once(OWF_ACTIVATE_WIDGET_RESP, (sender, result) => {
+                if(typeof cfg.callback == "function") {
+                    cfg.callback(result);
+                }
+            });
+            ipcRenderer.send(OWF_ACTIVATE_WIDGET, cfg.guid);
+        },
         //used by PST
         addStateEventListeners: noop,
         //used by PST

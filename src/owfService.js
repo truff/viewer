@@ -15,8 +15,12 @@ const OWF_CHANNEL_SUBSCRIBE = "OWF_CHANNEL_SUBSCRIBE";
 const OWF_CHANNEL_UNSUBSCRIBE = "OWF_CHANNEL_UNSUBSCRIBE";
 const OWF_CHANNEL_GET_OPEN_WIDGETS = "OWF_CHANNEL_GET_OPEN_WIDGETS";
 const OWF_CHANNEL_GET_OPEN_WIDGETS_RESP = "OWF_CHANNEL_GET_OPEN_WIDGETS_RESP";
+const OWF_ACTIVATE_WIDGET = "OWF_ACTIVATE_WIDGET";
 
-//map of all currently open widgets indexed by window reference
+/**
+ * Map of all currently open widgets.  Index is BrowserWindow reference, value is
+ * object with structure {widgetInstanceId, widgetLaunchData, widgetRegEntry}
+ */
 const openWidgetRegistry = new Map();
 
 const generateGuid = function b(a) {
@@ -47,10 +51,7 @@ function launchWidget(event, config) {
         //.entries() returns array with [0] = key and [1] = value of the map.
         let openWidgets = Array.from(openWidgetRegistry.entries());
         existingWidget = openWidgets.find((entry) => {
-            //return (value.widgetRegEntry.universalName == config.universalName);
-            if(entry[1].widgetRegEntry.universalName == config.universalName) {
-                return entry[0];
-            }
+            return (entry[1].widgetRegEntry.universalName == config.universalName);
         });
         if(existingWidget && !winRegEntry.background) {
             //TODO: should we still send message back indicating success or failure?  E.g.:
@@ -72,7 +73,7 @@ function launchWidget(event, config) {
             //allowRunningInsecureContent: true,
             //webSecurity: false,
             nodeIntegration: false,
-            preload: path.join(__dirname, '/ElectronOwfSPI.js')
+            preload: path.join(__dirname, 'ElectronOwfSPI.js')
         }
     });
     
@@ -115,6 +116,8 @@ function launchWidget(event, config) {
     if (env.name === 'development' && env.mode == 'debug') {
         win.openDevTools({mode: 'undocked'});
     }
+    //launched widget needs to know its widget instanceId
+    win.instanceId = regEntry.id;
     win.loadURL(winRegEntry.widgetUrl);
 
     //receiver needs to link the launch request to the launch success.  do so using 
@@ -145,6 +148,7 @@ function initOwfMessageBus() {
     ipcMain.on(OWF_CHANNEL_SUBSCRIBE, subscribeHandler);
     ipcMain.on(OWF_CHANNEL_PUBLISH, publishHandler);
     ipcMain.on(OWF_CHANNEL_GET_OPEN_WIDGETS, getOpenWidgets);
+    ipcMain.on(OWF_ACTIVATE_WIDGET, activateWidget);
 }
 function initOwf() {
     initOwfLauncher();
@@ -234,7 +238,25 @@ function getOpenWidgets(event) {
     console.info("sending openWidgets response to render window with following open widgets");
     console.info(openWidgetsResponseArray);
     event.sender.send(OWF_CHANNEL_GET_OPEN_WIDGETS_RESP, openWidgetsResponseArray);
-};
+}
+/**
+ * @param {object} cfg - @see owf.state.activateWidget in owf documentation
+ */
+function activateWidget(event, widgetId) {
+    console.info("activateWidget called with widget guid: " + widgetId);
+    //
+    let widget;
+    let openWidgets = Array.from(openWidgetRegistry.entries());
+    widget = openWidgets.find((entry) => {
+        return (entry[1].id == widgetId);
+    });
+    //Activate the widget
+    if(widget) {
+        widget[0].focus();
+    } else {
+        console.warn("attempt to activate a widget with an unregistered widget instanceId");
+    }
+}
 
 module.exports = {
     LAUNCH_WIDGET_CM: LAUNCH_WIDGET_CM,
