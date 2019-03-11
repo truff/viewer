@@ -314,7 +314,6 @@ var noop = function() { };
 Ozone.state.WidgetState = function() {
     return {
         version: '1',
-        //TODO(TPR): bring window to front
         /*
          * cfg is object with structure {guid: <guid>, callback: <callback>}
          * guid - guid of widget to activate
@@ -326,7 +325,7 @@ Ozone.state.WidgetState = function() {
             if(cfg == null || cfg.guid == null) {
                 cfg = { guid: OWF.getInstanceId()};
             }
-            console.info("attempting to activate widget " + cfg.guid);
+            //console.info("attempting to activate widget " + cfg.guid);
             //register response handler
             ipcRenderer.once(OWF_ACTIVATE_WIDGET_RESP, (sender, result) => {
                 if(typeof cfg.callback == "function") {
