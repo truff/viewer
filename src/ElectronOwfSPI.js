@@ -323,7 +323,7 @@ Ozone.state.WidgetState = function() {
          */
         activateWidget: function(cfg) {
             //default widget to activate is the current widget
-            if(cfg == null || cfg.id == null) {
+            if(cfg == null || cfg.guid == null) {
                 cfg = { guid: OWF.getInstanceId()};
             }
             console.info("attempting to activate widget " + cfg.guid);
