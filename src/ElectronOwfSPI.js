@@ -64,7 +64,7 @@ addNamespace(Ozone, "state");
  */
 OWF.runningInElectron = true;
 OWF.test = function() {
-    console.info("ElectronOwfSPI loaded");
+    //console.info("ElectronOwfSPI loaded");
 };
 OWF.getInstanceId = function() {
     //Used by eventing, e.g., communicated to receiving widget when publishing a channel

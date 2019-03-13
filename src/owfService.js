@@ -85,7 +85,7 @@ function launchWidget(event, config) {
         //remove this window from the list of subscribers for all channels
         subscriptionRegistry.forEach((subscribersForChannel, channelName, map) => {
             if(subscribersForChannel && subscribersForChannel.has(event.sender.id)) {
-                console.info("removing window from list of subscribers for channel " + channelName);
+                // console.info("removing window from list of subscribers for channel " + channelName);
                 subscribersForChannel.delete(event.sender.id);
             }
         });
@@ -100,7 +100,7 @@ function launchWidget(event, config) {
         });
         //If no foreground widgets are still open exit app
         if(!foregroundWidget) {
-            console.info("Last foreground widget is closing.  Exiting application.");
+            // console.info("Last foreground widget is closing.  Exiting application.");
             app.exit();
         }
     });
@@ -178,7 +178,7 @@ function publishHandler(event, channelName, payload, dest, srcWidget) {
             //it from subscribers list for the channel.  For Sets, unlike with arrays, 
             // each element will be visited once even if you delete an element during iteration.
             if( wc == null) {
-                console.info("attempt to send message to a closed window.  Removing subscription.");
+                // console.info("attempt to send message to a closed window.  Removing subscription.");
                 subscriptionsForChannel.delete(webContentsId);
             } else {
                 let sender = BrowserWindow.fromWebContents(wc);
@@ -216,7 +216,6 @@ function getOpenWidgets(event) {
     //Could use a remote interface to call BrowserWindow.getAllWindows(), but
     // then you only have access to the browser window, not the other info in
     // the openedWindows registry that is stored in the main process hashmap.
-    console.info("in OwfService.getOpenWidgets");
     //.entries() returns array with [0] = key and [1] = value of the map.
     let openWidgets = Array.from(openWidgetRegistry.entries());
 
@@ -235,15 +234,15 @@ function getOpenWidgets(event) {
             }
         );
     });
-    console.info("sending openWidgets response to render window with following open widgets");
-    console.info(openWidgetsResponseArray);
+    // console.info("sending openWidgets response to render window with following open widgets");
+    // console.info(openWidgetsResponseArray);
     event.sender.send(OWF_CHANNEL_GET_OPEN_WIDGETS_RESP, openWidgetsResponseArray);
 }
 /**
  * @param {object} cfg - @see owf.state.activateWidget in owf documentation
  */
 function activateWidget(event, widgetId) {
-    console.info("activateWidget called with widget guid: " + widgetId);
+    //console.info("activateWidget called with widget guid: " + widgetId);
     //
     let widget;
     let openWidgets = Array.from(openWidgetRegistry.entries());
