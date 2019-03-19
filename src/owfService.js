@@ -113,9 +113,9 @@ function launchWidget(event, config) {
         'widgetRegEntry': winRegEntry,
     };
     openWidgetRegistry.set(win, regEntry);
-    if (env.name === 'development' && env.mode == 'debug') {
-        win.openDevTools({mode: 'undocked'});
-    }
+    // if (env.name === 'development' && env.mode == 'debug') {
+    //     win.openDevTools({mode: 'undocked'});
+    // }
     //launched widget needs to know its widget instanceId
     win.instanceId = regEntry.id;
     win.loadURL(winRegEntry.widgetUrl);
