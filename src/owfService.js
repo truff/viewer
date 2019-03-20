@@ -76,7 +76,8 @@ function launchWidget(event, config) {
             preload: path.join(__dirname, 'ElectronOwfSPI.js')
         }
     });
-    
+    win.helpUrl = winRegEntry.helpUrl;
+
     win.on('close', (event) => {
         //console.info("before close: " + openWidgetRegistry.size);
         if(openWidgetRegistry.has(event.sender)) {

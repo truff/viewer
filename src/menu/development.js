@@ -5,8 +5,8 @@ const BrowserWindow = electron.BrowserWindow;
 const devMenuTemplate = {
   label: "Development",
   submenu: [
-    { role: 'forcereload'},
-    { role: 'toggledevtools'}
+    { role: 'forcereload', accelerator: 'Shift+F5'},
+    { role: 'toggledevtools', accelerator: 'F12'}
   ]
 };
 module.exports = devMenuTemplate;

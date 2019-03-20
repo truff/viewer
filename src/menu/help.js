@@ -2,7 +2,7 @@ const createWindow = require("../helpers/window.js");
 const env = require("../helpers/env.js");
 const path = require("path");
 const url = require("url");
-const {shell} = require("electron");
+const {shell, dialog, BrowserWindow} = require("electron");
 
 const helpMenuTemplate = {
     label: "Help",
@@ -14,9 +14,15 @@ const helpMenuTemplate = {
             click () {
                 //TODO(TPR): For now just open the map's help file.  Need to change
                 // so the help doc is the one for the current window.
-                let fullPath = env.nites_host + '/planaTerra/docs/Map.pdf';
+                let win = BrowserWindow.getFocusedWindow();
+                let fullPath = win.helpUrl;
+                //let fullPath = env.nites_host + '/planaTerra/docs/Map.pdf';
                 //shell.openExternal(fullPath);
-                shell.openItem(fullPath);
+                if(fullPath) {
+                    shell.openItem(fullPath);
+                } else {
+                    dialog.showMessageBox(win, {type: "info", title: "Help unavailable", message: "No help is available for the current page"});
+                }
                 //TODO: Electron native support for PDF is planned to be fixed in version 4
                 // or 5.  Once that happens evaluate whether it is satisfactory and revert
                 // the above to this previous behavior:
@@ -40,7 +46,7 @@ const helpMenuTemplate = {
                     width: 850,
                     height: 600
                 });
-                win.loadURL(env.nites_host + '/owf/help/ABOUT.html');
+                win.loadURL(path.join(env.nites_host, '/owf/help/ABOUT.html'));
             }
         },
         {

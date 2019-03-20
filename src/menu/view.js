@@ -3,7 +3,7 @@ const { dialog, app } = require('electron');
 const path = require("path");
 
 const viewMenuTemplate = {
-    label: 'View',
+    label: 'View', 
     submenu: [
       {
           label: 'Toggle Auto-hide Menu',
@@ -11,7 +11,7 @@ const viewMenuTemplate = {
             browserWindow.setAutoHideMenuBar(!browserWindow.isMenuBarAutoHide());
           }
       },
-      { role: 'reload'},
+      { role: 'reload', accelerator: 'F5'},
       { type: 'separator' },
       { role: 'resetzoom' },
       { 
