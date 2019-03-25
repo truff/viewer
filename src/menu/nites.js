@@ -128,7 +128,7 @@ const nitesMenuTemplate = {
         {
             //role: 'quit'
             label: "Exit",
-            accelerator: "CmdOrCtrl+X",
+            accelerator: "Alt+F4",
             click: () => {
                 app.quit();
             }
