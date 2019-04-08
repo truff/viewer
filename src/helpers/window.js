@@ -5,7 +5,8 @@
 const electron = require("electron");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-//const screen = electron.screen;
+const shell = electron.shell;
+
 let screen;
 app.on('ready', () => {
     screen = electron.screen
@@ -86,7 +87,18 @@ module.exports = function(name, options) {
 
   //don't allow files dropped from os to load in browser
   win.webContents.on('will-navigate', ev => {
-    ev.preventDefault()
+    event.preventDefault();
+    shell.openExternal(url);
+  });
+
+  //Open pdfs in system registered viewer.  Would be better to also check the MIME type of the 
+  // reponse but electron APIs don't appear to support that.  May be necessary to first execute
+  // a HEAD request and then check the Content-type entity header.
+  win.webContents.on('new-window', (event, url) => {
+    if(url.toLowerCase().endsWith('.pdf')) {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
   });
 
   win.on("close", saveState);
