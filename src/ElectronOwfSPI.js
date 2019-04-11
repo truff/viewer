@@ -262,13 +262,13 @@ OWF.Preferences.doesUserPreferenceExist = function(cfg) {
  * });
  */
 OWF.Preferences.getCurrentUser = function(cfg) {
-    //cfg.onSuccess({ currentUserName: 'Thomas.Ruff' });
-    //let user = ipcRenderer.sendSync('getCurrentUser');
-    //cfg.onSuccess({ currentUserName: user });
-    //TODO: need to ensure that request/response are linked.
     ipcRenderer.once('getCurrentUserResp', function(evt, name) {
-        //console.info("processing getCurrentUserResp event for " + name);
-        cfg.onSuccess({ currentUserName: name });
+        cfg.onSuccess({
+            currentUserName: name,
+            currentUser: name,
+            currentUserPrevLogin: new Date().toISOString(),
+            currentId: 0
+        });
     });
     ipcRenderer.send('getCurrentUser');
 };
