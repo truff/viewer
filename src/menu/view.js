@@ -23,8 +23,9 @@ const viewMenuTemplate = {
           click(menuItem, browserWindow, event) {
               browserWindow.capturePage( (img) => {
                   const saveTo = path.join(app.getPath('downloads'), 'screenCapture.png');
-                  fs.writeAsync(saveTo, img.toPNG());
-                  dialog.showMessageBox(browserWindow, {title: "Screen capture", message: 'Your image has been saved to ' + saveTo});
+                  fs.writeAsync(saveTo, img.toPNG()).then( ()=> {
+                      dialog.showMessageBox(browserWindow, {title: "Screen capture", message: 'Your image has been saved to ' + saveTo});
+                  });
               });
           }
       }
