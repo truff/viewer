@@ -4,28 +4,32 @@
  */
 const { app, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
+let certSelector;
 
 app.on('select-client-certificate', (event, webContents, url, list, callback) => {
-    //console.info('select-client-certificate eventCount: ' + webContents._eventsCount);
-    let selectedCert;
     // list.forEach((li) => {
     //     console.info('Subject: ' + li.subjectName + '\nIssuer: ' + li.issuerName);
     // });
     event.preventDefault();
 
+    //Not sure what causes it, but I have seen multiple cert selection dialogs
+    //ala TR OWF behavior, but on RDT&E in electron.
+    if(certSelector != null) {
+        console.error('Ignoring duplicative select-client-certificate messages.  This may be an ActiveClient error.');
+        return;
+    }
+
     /**
      * Called by certificate select dialog when user selects a cert and clicks submit.
      */
     ipcMain.once('client-certificate-selected', (event, item) => {
-        //console.log('selected:', item);
         event.sender.session.item = item;
         setCurrentUser(item.subjectName);
         callback(item);
     });
 
     //create window to display certificates and allow user to select one
-    //let certSelector = createWindow('cert_selector', {
-    let certSelector = new BrowserWindow({
+    certSelector = new BrowserWindow({
         show: false,
         width: 370,
         height: 330,
