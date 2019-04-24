@@ -6,7 +6,7 @@ const devMenuTemplate = {
   label: "Development",
   submenu: [
     { role: 'forcereload', accelerator: 'Shift+F5'},
-    { role: 'toggledevtools', accelerator: 'F12'}
+    { role: 'toggledevtools'}
   ]
 };
 module.exports = devMenuTemplate;

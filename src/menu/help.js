@@ -52,6 +52,11 @@ const helpMenuTemplate = {
                     })
                 );
             }
+        },
+        {
+            role: 'toggledevtools',
+            accelerator: 'F12',
+            visible: false
         }
     ]
 };
