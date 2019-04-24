@@ -110,12 +110,13 @@ const nitesMenuTemplate = {
                 owfService.launchWidget(null, {universalName: "UserPreferences.gis.fnmoc.navy.mil"});
             }
         },
-        {
-            label: 'User Account Manager',
-            click () {
-                owfService.launchWidget(null, {universalName: "nn.userAccountManager"});
-            }
-        },
+        //TPR: only list UAM for training environment
+        // {
+        //     label: 'User Account Manager',
+        //     click () {
+        //         owfService.launchWidget(null, {universalName: "nn.userAccountManager"});
+        //     }
+        // },
         {
             label: 'KML Manager',
             click () {
