@@ -5,12 +5,6 @@ const path = require("path");
 const viewMenuTemplate = {
     label: 'View', 
     submenu: [
-      {
-          label: 'Toggle Auto-hide Menu',
-          click (menuItem, browserWindow, event) {
-            browserWindow.setAutoHideMenuBar(!browserWindow.isMenuBarAutoHide());
-          }
-      },
       { role: 'reload', accelerator: 'F5'},
       { type: 'separator' },
       { role: 'resetzoom' },
