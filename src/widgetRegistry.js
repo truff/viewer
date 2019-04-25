@@ -200,9 +200,8 @@ const registry = [
         //Metadata Info
         "universalName": "nn.MetadataUrl",
         "displayName": "Metadata Info",
-        //TODO: retest with the basic index.html.  May work now.
-        //"widgetUrl": defaultHostUrl + metaInfoRootContext + "/index.html",
-        "widgetUrl": defaultHostUrl + metaInfoRootContext + "/ViewerHomeStatic.html",
+        "widgetUrl": defaultHostUrl + metaInfoRootContext + "/index.html",
+        //"widgetUrl": defaultHostUrl + metaInfoRootContext + "/ViewerHomeStatic.html",
         "imageUrlSmall": defaultHostUrl + metaInfoRootContext + "/images/details.jpg",
         "imageUrlMedium": defaultHostUrl + metaInfoRootContext + "/images/details.jpg",
         "width": 350,
@@ -239,8 +238,6 @@ const registry = [
         "displayName": "MetOc Drawing Tool",
         "description": "Select annotations to display on the Map",
         "widgetVersion": "1.0",
-        //IMPORTANT! Use the html version of this file because it fixes the electron module 
-        // issue with jquery undefined.
         //"widgetUrl": defaultHostUrl + mdtRootContext + "/index.jsp",
         "widgetUrl": defaultHostUrl + mdtRootContext + "/index.html",
         "imageUrlSmall": defaultHostUrl + mdtRootContext + "/images/launch-icon.png",
@@ -424,7 +421,8 @@ const registry = [
         //Solar Lunar Almanac Prediction
         "universalName": "slac.fnmoc.navy.mil",
         "displayName": "Solar Lunar Almanac Prediction",
-        "widgetUrl": defaultHostUrl + slacRootContext + "/viewerStartPage.jsp",
+        //"widgetUrl": defaultHostUrl + slacRootContext + "/viewerStartPage.jsp",
+        "widgetUrl": defaultHostUrl + slacRootContext + "/index.jsp",
         "imageUrlSmall": defaultHostUrl + slacRootContext + "/images/owf/icon.png",
         "imageUrlMedium": defaultHostUrl + slacRootContext + "/images/owf/icon.png",
         "width": 300,
