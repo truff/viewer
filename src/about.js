@@ -10,5 +10,5 @@ document.querySelector("#productVersion").innerHTML = manifest.productVersion;
 let homepage = manifest.homepage;
 document.querySelector("#homepage").innerHTML = homepage;
 document.querySelector("#homepage").addEventListener('click', (event)=>{
-    shell.openItem(homepage);
+    shell.openExternal(homepage);
 });
