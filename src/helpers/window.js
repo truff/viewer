@@ -78,7 +78,11 @@ module.exports = function(name, options) {
     if (!win.isMinimized() && !win.isMaximized()) {
       Object.assign(state, getCurrentPosition());
     }
-    userDataDir.write(stateStoreFile, state, { atomic: true });
+    try {
+      userDataDir.write(stateStoreFile, state, { atomic: true });
+    } catch(err) {
+      //make best effort to write state, but when exiting it may sometimes fail
+    }
   };
 
   state = ensureVisibleOnSomeDisplay(restore());
