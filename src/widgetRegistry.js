@@ -147,7 +147,8 @@ const registry = [
         //GBS
         "universalName": "GBS.gis.fnmoc.navy.mil",
         "displayName": "GBS",
-        "widgetUrl": defaultHostUrl + gbsRootContext + "/index.html",
+        //"widgetUrl": defaultHostUrl + gbsRootContext + "/index.html",
+        "widgetUrl": defaultHostUrl + gbsRootContext + "/index.jsp",
         "imageUrlSmall": defaultHostUrl + gbsRootContext + "/images/gbs_16.png",
         "imageUrlMedium": defaultHostUrl + gbsRootContext + "/images/gbs_16.png",
         "width": 500,
