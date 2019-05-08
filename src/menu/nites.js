@@ -117,12 +117,12 @@ const nitesMenuTemplate = {
         //         owfService.launchWidget(null, {universalName: "nn.userAccountManager"});
         //     }
         // },
-        {
-            label: 'KML Manager',
-            click () {
-                owfService.launchWidget(null, {universalName: "nn.KmlManager"});
-            }
-        },
+        // {
+        //     label: 'KML Manager',
+        //     click () {
+        //         owfService.launchWidget(null, {universalName: "nn.KmlManager"});
+        //     }
+        // },
         {
             type: 'separator'
         },

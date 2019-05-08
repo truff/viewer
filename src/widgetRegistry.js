@@ -158,12 +158,12 @@ const registry = [
         "visible": true,
         "background": false,
         "helpUrl": path.join(defaultHostUrl, helpFileServlet, "GBS.pdf")
-    }, {
-        //Kml Manager    
-        "universalName": "nn.KmlManager",
-        "widgetUrl": defaultHostUrl + "/kmlManager",
-        "guid": "cb614809-673a-4737-96db-d2ef8d7acce2",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "KMLManager.pdf")
+    // }, {
+    //     //Kml Manager    
+    //     "universalName": "nn.KmlManager",
+    //     "widgetUrl": defaultHostUrl + "/kmlManager",
+    //     "guid": "cb614809-673a-4737-96db-d2ef8d7acce2",
+    //     "helpUrl": path.join(defaultHostUrl, helpFileServlet, "KMLManager.pdf")
     }, {
         //Layer Legend
         "universalName": "nn.legendInfo",
