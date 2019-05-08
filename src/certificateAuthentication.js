@@ -10,6 +10,10 @@ app.on('select-client-certificate', (event, webContents, url, list, callback) =>
     // list.forEach((li) => {
     //     console.info('Subject: ' + li.subjectName + '\nIssuer: ' + li.issuerName);
     // });
+    if (list.length == 1) {
+        //perform default behavior of supplying the first certificate in the list.
+        return;
+    }
     event.preventDefault();
 
     //Not sure what causes it, but I have seen multiple cert selection dialogs
@@ -58,7 +62,7 @@ app.on('select-client-certificate', (event, webContents, url, list, callback) =>
 });
 
 app.on('certificate-error', (event, webContents, url, error, certificate, callback) => {
-    //console.log('certificate-error', url);
+    console.log('certificate-error', url, certificate, error);
     //if you choose to trust the cert anyway, call event.preventDefault() and return true
     //const result = true|false - do your validation here, call callback with bool isTrusted arg
     //event.preventDefault();
