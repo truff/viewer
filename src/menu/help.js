@@ -12,7 +12,6 @@ const helpMenuTemplate = {
                 let win = BrowserWindow.getFocusedWindow();
                 let fullPath = win.helpUrl;
                 if(fullPath) {
-                    //shell.openItem(fullPath);
                     shell.openExternal(fullPath);
                 } else {
                     dialog.showMessageBox(win, {type: "info", title: "Help unavailable", message: "No help is available for the current page"});
