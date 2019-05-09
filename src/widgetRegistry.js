@@ -7,7 +7,6 @@
  */
 //IMPORTANT: Do not place boolean property values in quotes!
 const env = require('./helpers/env.js');
-const path = require("path");
 
 const defaultHostUrl = env.nites_host;
 const planaTerraRootContext = "/planaTerra";
@@ -57,7 +56,7 @@ const registry = [
         "background": false,
         "displayName": "Map",
         "guid": "47383faa-3d32-4c59-913e-408e34a1a4da",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "Map.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "Map.pdf"
     }, {
         //AlphanumericFiltering & thresholding
         "universalName": "ANFT.gis.fnmoc.navy.mil",
@@ -68,7 +67,7 @@ const registry = [
         "width": 600,
         "height": 400,
         "guid": "0befc501-86a9-4783-9447-dc1594c84d43",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "AlphanumericFilteringThresholding.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "AlphanumericFilteringThresholding.pdf"
     }, {
         //Analysis Time Widget
         "universalName": "AnalysisTimeWidget.gis.fnmoc.navy.mil",
@@ -82,7 +81,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "135227e7-516e-4c7f-acde-318f0fc47823",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "AnalysisTimeWidget.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "AnalysisTimeWidget.pdf"
     }, {
         //Animation
         "universalName": "Animation.gis.fnmoc.navy.mil",
@@ -93,7 +92,7 @@ const registry = [
         "width": 375,
         "height": 375,
         "guid": "463bcfd8-8dbf-44d1-9e1d-0b7165897511",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "Animation.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "Animation.pdf"
     }, {
         //AOI Manager
         "universalName": "AOIWidget.gis.fnmoc.navy.mil",
@@ -103,7 +102,7 @@ const registry = [
         "height": 700,
         "visible": true,
         "guid": "42dcacae-9ead-4d9d-8838-87d7943e9683",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "AOIWidget.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "AOIWidget.pdf"
     }, {
         //CPA
         "universalName": "CPAWidget.gis.fnmoc.navy.mil",
@@ -117,12 +116,14 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "5b210714-7340-4792-9236-996e786b4916",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "CPAWidget.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "CPAWidget.pdf"
     }, {
         //DOC
         "universalName": "DataOrderingClient.gis.fnmoc.navy.mil",
         "displayName": "Data Ordering Client",
         "widgetUrl": defaultHostUrl + docRootContext + "/Selection.html",
+        //This causes Chrome to display error regarding plug-in
+        //"widgetUrl": defaultHostUrl + docRootContext + "/Selection.html?gwt.codesvr=127.00.1:9876",
         "imageUrlSmall": defaultHostUrl + docRootContext + "/images/doc-icon.png",
         "imageUrlMedium": defaultHostUrl + docRootContext + "/images/doc-icon.png",
         "width": 800,
@@ -131,7 +132,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "b6d8fee6-3d1d-4f36-9e62-05484f1a2eb4",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "DataOrderingClient.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "DataOrderingClient.pdf"
     }, {
         //Environmental Analysis
         "universalName": "MetocEnvironmentalAnalysis.gis.fnmoc.navy.mil",
@@ -142,7 +143,7 @@ const registry = [
         "width": 600,
         "height": 400,
         "guid": "31feff8d-6bf5-48cc-94a1-a7f84e24acd3",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "EnvironmentalAnalysis.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "EnvironmentalAnalysis.pdf"
     }, {
         //GBS
         "universalName": "GBS.gis.fnmoc.navy.mil",
@@ -157,13 +158,7 @@ const registry = [
         "singleton": true,
         "visible": true,
         "background": false,
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "GBS.pdf")
-    // }, {
-    //     //Kml Manager    
-    //     "universalName": "nn.KmlManager",
-    //     "widgetUrl": defaultHostUrl + "/kmlManager",
-    //     "guid": "cb614809-673a-4737-96db-d2ef8d7acce2",
-    //     "helpUrl": path.join(defaultHostUrl, helpFileServlet, "KMLManager.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "GBS.pdf"
     }, {
         //Layer Legend
         "universalName": "nn.legendInfo",
@@ -184,7 +179,7 @@ const registry = [
         "width": 600,
         "height": 450,
         "guid": "9193bb10-8b32-43f9-b0b4-f3f2f07f92fc",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "LayerStyler.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "LayerStyler.pdf"
     }, {
         //Map Detail
         "universalName": "MapDetail.gis.fnmoc.navy.mil",
@@ -196,7 +191,7 @@ const registry = [
         "height": 200,
         "singleton": true,
         "guid": "c52184a3-7104-48e0-b958-2047aa8530ab",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "MapDetails.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "MapDetails.pdf"
     }, {
         //Metadata Info
         "universalName": "nn.MetadataUrl",
@@ -232,7 +227,7 @@ const registry = [
         "singleton": false,
         "visible": true,
         "guid": "a2faa1ff-728c-4649-80bc-21a213d12501",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCCalculator.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCCalculator.pdf"
     }, {
         //MDT
         "universalName": "nn.MetocDrawingTool",
@@ -249,7 +244,7 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "bb75a439-a748-4da1-84ae-98c3454b4f78",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCDrawingTool.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCDrawingTool.pdf"
     }, {
         //MI Manager
         "universalName": "METOCImpactsManager.gis.fnmoc.navy.mil",
@@ -263,7 +258,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "e59ab693-bae9-4c1a-8bec-e59a7fd3549c",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCImpacts.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCImpacts.pdf"
     }, {
         //MI Assets
         "universalName": "METOCImpactsAssets.gis.fnmoc.navy.mil",
@@ -277,7 +272,7 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "7b98822e-8acc-42bf-ab8a-dfd69fc25f2b",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCImpacts.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCImpacts.pdf"
     }, {
         //MI Locations
         "universalName": "METOCImpactsLocations.gis.fnmoc.navy.mil",
@@ -291,7 +286,7 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "84a4c0fb-d8f0-40b4-b8f5-96f18bbd2705",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCImpacts.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCImpacts.pdf"
     }, {
         //MI Rules
         "universalName": "METOCImpactsRules.gis.fnmoc.navy.mil",
@@ -305,7 +300,7 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "c3da362d-e898-4ef0-8479-6f3905cad96b",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCImpacts.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCImpacts.pdf"
     }, {
         //MI Summary
         "universalName": "METOCImpactsSummary.gis.fnmoc.navy.mil",
@@ -319,7 +314,7 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "a7485106-e28d-4445-92ab-306a4df90ec2",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "METOCImpacts.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCImpacts.pdf"
     }, {
         //Model Selection
         "universalName": "ModelSelection.gis.fnmoc.navy.mil",
@@ -333,7 +328,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "60d38a97-cf1f-4c54-a182-1c9c636de243",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "ModelSelection.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "ModelSelection.pdf"
     }, {
         //MOVREPEditor
         "universalName": "MOVREPEditor.gis.fnmoc.navy.mil",
@@ -347,7 +342,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "c735ad08-4390-404b-801d-6ae9787ac489",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "MOVREPEditor.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "MOVREPEditor.pdf"
     }, {
         //NRDB
         "universalName": "NRDB.gis.fnmoc.navy.mil",
@@ -361,7 +356,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "7989d6e5-0c86-4f31-aa2b-8233d4347f85",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "NRDB.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "NRDB.pdf"
     }, {
         //ObsEntry
         "universalName": "ObsEntry.gis.fnmoc.navy.mil",
@@ -376,7 +371,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "e69772f3-7518-4efb-846c-13a2118bb08b",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "ObservationEntry.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "ObservationEntry.pdf"
     }, {
         //PIM
         "universalName": "PIMEditor.gis.fnmoc.navy.mil",
@@ -388,7 +383,7 @@ const registry = [
         "height": 450,
         "singleton": true,
         "guid": "f15896ce-4310-4fb1-bc4f-9fc0fab1ed98",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "PIMEditor.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "PIMEditor.pdf"
     }, {
         //PST
         "universalName": "ProductSelectionTool.gis.fnmoc.navy.mil",
@@ -403,7 +398,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "73c84770-39dc-44af-8c79-75e7bb8bcdf1",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "ProductSelection.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "ProductSelection.pdf"
     }, {
         //Server Manager Widget
         "universalName": "ServerManager.gis.fnmoc.navy.mil",
@@ -417,7 +412,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "217e486e-9700-4f09-8166-6dd2486fde34",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "ServerManager.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "ServerManager.pdf"
     }, {
         //Solar Lunar Almanac Prediction
         "universalName": "slac.fnmoc.navy.mil",
@@ -432,7 +427,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "f7cd9c35-10ab-4591-887c-3798145d2542",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "SLAP.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "SLAP.pdf"
     }, {
         //User Acct Mgr
         "universalName": "nn.userAccountManager",
@@ -459,7 +454,7 @@ const registry = [
         "singleton": true,
         "background": false,
         "guid": "457fdd38-52a3-41c0-a813-37f23eca11b9",
-        "helpUrl": path.join(defaultHostUrl, helpFileServlet, "UserPreferences.pdf")
+        "helpUrl": defaultHostUrl + helpFileServlet + "UserPreferences.pdf"
     }
 ];
 
