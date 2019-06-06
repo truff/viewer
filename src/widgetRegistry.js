@@ -123,7 +123,7 @@ const registry = [
         "displayName": "Data Ordering Client",
         "widgetUrl": defaultHostUrl + docRootContext + "/Selection.html",
         //This causes Chrome to display error regarding plug-in
-        //"widgetUrl": defaultHostUrl + docRootContext + "/Selection.html?gwt.codesvr=127.00.1:9876",
+        //"widgetUrl": defaultHostUrl + docRootContext + "/Selection.html?gwt.codesvr=127.0.0.1:9876",
         "imageUrlSmall": defaultHostUrl + docRootContext + "/images/doc-icon.png",
         "imageUrlMedium": defaultHostUrl + docRootContext + "/images/doc-icon.png",
         "width": 800,
@@ -347,7 +347,8 @@ const registry = [
         //NRDB
         "universalName": "NRDB.gis.fnmoc.navy.mil",
         "displayName": "NRDB",
-        "widgetUrl": defaultHostUrl + nrdbRootContext + "/index.html",
+        //"widgetUrl": defaultHostUrl + nrdbRootContext + "/index.html",
+        "widgetUrl": defaultHostUrl + nrdbRootContext + "/index.jsp",
         "imageUrlSmall": defaultHostUrl + nrdbRootContext + "/images/nrdb_16.png",
         "imageUrlMedium": defaultHostUrl + nrdbRootContext + "/images/nrdb_16.png",
         "width": 500,

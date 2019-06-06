@@ -87,7 +87,7 @@ const nitesMenuTemplate = {
             }
         },
         {
-            label: 'Route (PIM) Editor',
+            label: 'PIM Editor',
             click () {
                 owfService.launchWidget(null, {universalName: "PIMEditor.gis.fnmoc.navy.mil"});
             }
@@ -99,7 +99,7 @@ const nitesMenuTemplate = {
             }
         },
         {
-            label: 'Solar/Lunar Calculator',
+            label: 'Solar Lunar Almanac Prediction',
             click () {
                 owfService.launchWidget(null, {universalName: "slac.fnmoc.navy.mil"});
             }

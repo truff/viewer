@@ -2,8 +2,8 @@
   "name": "nites-viewer",
   "productName": "NITES-Next Viewer",
   "description": "NITES-Next Operational Viewer for CANES",
-  "version": "1.0.0",
-  "productVersion": "1.0",
+  "version": "1.0.1",
+  "productVersion": "1.0.1",
   "private": true,
   "homepage": "https://confluence.di2e.net/display/NNEXT/NITES-Next",
   "main": "src/background.js",
@@ -18,7 +18,7 @@
     "electron-in-page-search": "^1.3.2"
   },
   "devDependencies": {
-    "electron": "4.2.0",
+    "electron": "4.2.4",
     "electron-packager": "^13.1.1"
   }
 }
