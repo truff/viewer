@@ -183,10 +183,16 @@ subscribeHandlerProxy = function(handler, event, payload, srcWidget, channelName
 OWF.Eventing.subscribe = function(channelName, handler) {
     //OWF doesn't allow multiple subscriptions to the same channel from a widget.
     // To emulate that behavior keep track of the channels we've subscribed to.
+    //Some widgets (PIM, VCS) resubscribe to channels they are already subscribed
+    // to.  OWF would re-register the event with the new event handler in that 
+    // case (though it was undocumented behavior).  Do the same.
     if(!subscriptions.has(channelName)) {
         ipcRenderer.on(channelName, subscribeHandlerProxy.bind(null, handler));
         ipcRenderer.send(OWF_CHANNEL_SUBSCRIBE, channelName);
         subscriptions.add(channelName);
+    } else {
+        ipcRenderer.removeAllListeners(channelName);
+        ipcRenderer.on(channelName, subscribeHandlerProxy.bind(null, handler));
     }
 };
 

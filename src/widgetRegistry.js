@@ -244,7 +244,8 @@ const registry = [
         "singleton": false,
         "background": false,
         "guid": "bb75a439-a748-4da1-84ae-98c3454b4f78",
-        "helpUrl": defaultHostUrl + helpFileServlet + "METOCDrawingTool.pdf"
+        "helpUrl": defaultHostUrl + helpFileServlet + "METOCDrawingTool.pdf",
+        "alwaysOnTop": true
     }, {
         //MI Manager
         "universalName": "METOCImpactsManager.gis.fnmoc.navy.mil",

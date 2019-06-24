@@ -37,7 +37,8 @@ app.on('select-client-certificate', (event, webContents, url, list, callback) =>
         show: false,
         width: 370,
         height: 330,
-        resizable: false
+        resizable: false,
+        alwaysOnTop: true
     });
     certSelector.once('ready-to-show', () => {
         certSelector.setMenuBarVisibility(false);

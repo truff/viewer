@@ -69,6 +69,7 @@ function launchWidget(event, config) {
         height: config.heigth || winRegEntry.height || 300,
         show: !winRegEntry.background,
         autoHideMenuBar: false,
+        alwaysOnTop: winRegEntry.alwaysOnTop,
         webPreferences: {
             //allowRunningInsecureContent: true,
             //webSecurity: false,
@@ -182,8 +183,7 @@ function publishHandler(event, channelName, payload, dest, srcWidget) {
                 // console.info("attempt to send message to a closed window.  Removing subscription.");
                 subscriptionsForChannel.delete(webContentsId);
             } else {
-                let sender = BrowserWindow.fromWebContents(wc);
-                sender.send(channelName, payload, srcWidget, channelName);
+                wc.send(channelName, payload, srcWidget, channelName);
             }
         });
     }
