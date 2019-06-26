@@ -44,6 +44,7 @@ const registry = [
     {
         //planaTerra
         "universalName": "nn.planaTerra",
+        "displayName": "Map",
         "description": "View and investigate data layers.",
         "height": 550,
         "width": 850,
@@ -54,7 +55,6 @@ const registry = [
         "imageUrlSmall": defaultHostUrl + planaTerraRootContext + "/images/map.png",
         "imageUrlMedium": defaultHostUrl + planaTerraRootContext + "/images/map.png",
         "background": false,
-        "displayName": "Map",
         "guid": "47383faa-3d32-4c59-913e-408e34a1a4da",
         "helpUrl": defaultHostUrl + helpFileServlet + "Map.pdf"
     }, {
@@ -96,7 +96,7 @@ const registry = [
     }, {
         //AOI Manager
         "universalName": "AOIWidget.gis.fnmoc.navy.mil",
-        "displayName": "AOI",
+        "displayName": "AOI Manager",
         "widgetUrl": defaultHostUrl + aoiWidgetRootContext + "/AOI.html",
         "width": 630,
         "height": 700,
@@ -136,7 +136,7 @@ const registry = [
     }, {
         //Environmental Analysis
         "universalName": "MetocEnvironmentalAnalysis.gis.fnmoc.navy.mil",
-        "displayName": "Environmental Analysis",
+        "displayName": "MetOc Environmental Analysis",
         "widgetUrl": defaultHostUrl + meaRootContext + "/Selection.html",
         "imageUrlSmall": defaultHostUrl + meaRootContext + "/images/mea-icon.png",
         "imageUrlMedium": defaultHostUrl + meaRootContext + "/images/mea-icon.png",
@@ -233,7 +233,6 @@ const registry = [
         "universalName": "nn.MetocDrawingTool",
         "displayName": "MetOc Drawing Tool",
         "description": "Select annotations to display on the Map",
-        "widgetVersion": "1.0",
         //"widgetUrl": defaultHostUrl + mdtRootContext + "/index.jsp",
         "widgetUrl": defaultHostUrl + mdtRootContext + "/index.html",
         "imageUrlSmall": defaultHostUrl + mdtRootContext + "/images/launch-icon.png",
@@ -363,7 +362,6 @@ const registry = [
         //ObsEntry
         "universalName": "ObsEntry.gis.fnmoc.navy.mil",
         "displayName": "Obs Entry",
-        "widgetVersion": "1.0",
         "widgetUrl": defaultHostUrl + obsEntryRootContext + "/index.jsp",
         "imageUrlSmall": defaultHostUrl + obsEntryRootContext + "/resources/images/launch-icon.png",
         "imageUrlMedium": defaultHostUrl + obsEntryRootContext + "/resources/images/launch-icon.png",
@@ -390,7 +388,6 @@ const registry = [
         //PST
         "universalName": "ProductSelectionTool.gis.fnmoc.navy.mil",
         "displayName": "Product Selection",
-        "widgetVersion": "1.0",
         "widgetUrl": defaultHostUrl + pstRootContext + "/Selection.html",
         "imageUrlSmall": defaultHostUrl + pstRootContext + "/images/mapss-icon.png",
         "imageUrlMedium": defaultHostUrl + pstRootContext + "/images/mapss-icon.png",
@@ -460,6 +457,28 @@ const registry = [
     }
 ];
 
+/**
+ * @typedef {Object} WidgetRegEntry
+ * @property {string} universalName
+ * @property {string} displayName
+ * @property {string} description
+ * @property {string} widgetUrl
+ * @property {string} imageUrlSmall
+ * @property {string} imageUrlMedium
+ * @property {string} width
+ * @property {string} height
+ * @property {string} singleton
+ * @property {string} background
+ * @property {string} guid
+ * @property {string} helpUrl
+ * @property {string} alwaysOnTop
+ * @property {string} visible
+ */
+/**
+ * Retrieves a the widget registration entry for the provided universal name
+ * @param {string} uname 
+ * @return {WidgetRegEntry} Widget registration entry
+ */
 function getWidgetRegistration(uname) {
     return registry.find((element) => {
         return uname == element.universalName;
