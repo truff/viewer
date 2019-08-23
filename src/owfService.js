@@ -74,7 +74,9 @@ function launchWidget(event, config) {
             //allowRunningInsecureContent: true,
             //webSecurity: false,
             nodeIntegration: false,
-            preload: path.join(__dirname, 'ElectronOwfSPI.js')
+            preload: path.join(__dirname, 'ElectronOwfSPI.js'),
+            //preventative for now, but in Electron v5 default will become true
+            contextIsolation: false
         }
     });
     win.helpUrl = winRegEntry.helpUrl;

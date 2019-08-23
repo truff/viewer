@@ -10,8 +10,12 @@ app.on('select-client-certificate', (event, webContents, url, list, callback) =>
     // list.forEach((li) => {
     //     console.info('Subject: ' + li.subjectName + '\nIssuer: ' + li.issuerName);
     // });
+    //automatically select cerificate if only one is available in user's cert store
     if (list.length == 1) {
-        //perform default behavior of supplying the first certificate in the list.
+        event.preventDefault();
+        let item = list[0];
+        setCurrentUser(item.subjectName);
+        callback(item);
         return;
     }
     event.preventDefault();
