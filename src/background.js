@@ -47,15 +47,23 @@ const setApplicationMenu = () => {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 };
 
+//Don't use the roaming profile for purposes e.g. chromium cache.  It is a network
+// share and suffers from performance and reliability issues.
+const path = require("path");
+if (process.platform == "win32") {
+    app.setPath("appData", process.env.LOCALAPPDATA);
+}
+
 // Allow separate userData for development and production builds
+let userData = path.join(process.env.LOCALAPPDATA, app.getName());
 if (env.name !== 'production') {
-    const userDataPath = app.getPath('userData');
-    app.setPath('userData', `${userDataPath} (${env.name})`);
+    app.setPath('userData', `${userData}-${env.name}`);
+} else {
+    app.setPath('userData', userData);
 }
 
 let mainWindow;
 
-//const path = require('path');
 //const url = require('url');
 //const createWindow = require('./helpers/window.js');
 app.on('ready', (launchInfo) => {

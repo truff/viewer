@@ -68,4 +68,4 @@ obj
 *.swo
 
 # bundled output directory
-nitesviewer-win32-x64
+nitesviewer-win32-x64*
