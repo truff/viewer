@@ -3,6 +3,7 @@
  * process that support client certificate authentication.  It exports nothing.
  */
 const { app, ipcMain, BrowserWindow } = require('electron');
+const sanitize = require('./sanitize');
 const path = require('path');
 let certSelector;
 
@@ -53,7 +54,7 @@ app.on('select-client-certificate', (event, webContents, url, list, callback) =>
         certSelector.webContents.send('displayCertificateList', list);
     });
 
-    // if(env.name === 'development' && env.mode == 'debug') {
+    // if(env.name === 'dev' && env.mode == 'debug') {
     //     certSelector.openDevTools();
     // }
     const certSelectorPath = path.join('file://', __dirname, '/certSelector.html');
@@ -77,7 +78,8 @@ app.on('certificate-error', (event, webContents, url, error, certificate, callba
 //OWF state
 var currentUser;
 function setCurrentUser(user) {
-    currentUser = user;
+    const sanitizedName = sanitize(user);
+    currentUser = sanitizedName;
 }
 ipcMain.on('setCurrentUser', (event, userName) => {
     setCurrentUser(userName);
