@@ -1,5 +1,5 @@
 {
-  "name": "production",
+  "name": "prod",
   "description": "Add here any environment specific stuff you like.",
   "nites_host": "https://nites-vm-2.sd.spawar.navy.mil"
 }

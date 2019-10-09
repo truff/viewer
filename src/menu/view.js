@@ -1,11 +1,23 @@
 const fs = require("fs-jetpack");
-const { dialog, app } = require('electron');
+const { app, dialog, session } = require('electron');
 const path = require("path");
 
 const viewMenuTemplate = {
     label: 'View', 
     submenu: [
       { role: 'reload', accelerator: 'F5'},
+      { 
+        label: 'Force Reload', accelerator: 'Ctrl+F5',
+        click: (menuItem, browserWindow, event) => {
+          let ses = session.defaultSession;
+          ses.clearCache(
+            () => {
+              console.info("Cache cleared by user");
+              browserWindow.reload();
+            }
+          );
+        }
+      },
       { type: 'separator' },
       { role: 'resetzoom' },
       { 
