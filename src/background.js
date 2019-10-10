@@ -40,7 +40,7 @@ const devMenuTemplate = require('./menu/development');
 
 const setApplicationMenu = () => {
     const menus = [nitesMenuTemplate, viewMenuTemplate];
-    if (env.name !== 'production') {
+    if (env.name !== 'prod') {
         menus.push(devMenuTemplate);
     }
     menus.push(helpMenuTemplate);
