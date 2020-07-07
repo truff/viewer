@@ -19,7 +19,7 @@
     "latinize": "^0.4.0"
   },
   "devDependencies": {
-    "electron": "4.2.11",
+    "electron": "7.2.4",
     "electron-packager": "^14.0.6"
   }
 }
